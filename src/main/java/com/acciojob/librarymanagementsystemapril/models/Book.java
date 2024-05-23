@@ -25,6 +25,8 @@ public class Book {
     private Genre genre;
     private boolean isIssued;
 
+    private double rating;
+
     @JoinColumn
     @ManyToOne
     private Author author;

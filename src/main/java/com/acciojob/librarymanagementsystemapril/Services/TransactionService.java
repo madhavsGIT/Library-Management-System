@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 
@@ -57,6 +59,8 @@ public class TransactionService {
 
         transaction.setTransactionStatus(TransactionStatus.SUCCESS);
         transaction.setCard(card);
+        transaction.setIssueDate(LocalDate.now());
+        transaction.setReturnDate(transaction.getIssueDate().plusWeeks(1));
         transaction.setBook(book);
         book.setIssued(true);
         card.setNoOfBooksIssued(card.getNoOfBooksIssued()+1);
@@ -96,7 +100,14 @@ public class TransactionService {
         }
 
 
-
+        LocalDate currentDate = LocalDate.now();
+        LocalDate returnDate = transaction.getReturnDate();
+        int fineAmount = 0;
+        if(currentDate.isAfter(returnDate)){
+            long days = ChronoUnit.DAYS.between(currentDate, returnDate);
+            fineAmount = (int) days * 5;
+        }
+        transaction.setFineAmount(fineAmount);
         transaction.setTransactionStatus(TransactionStatus.SUCCESS);
         book.setIssued(false);
         card.setNoOfBooksIssued(card.getNoOfBooksIssued()-1);

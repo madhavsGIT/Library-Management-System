@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -26,10 +27,10 @@ public class Transaction {
     private TransactionStatus transactionStatus;
 
     @Timestamp
-    private Date issueDate;
+    private LocalDate issueDate;
 
-    private Date returnDate;
-    private double fineAmount;
+    private LocalDate returnDate;
+    private int fineAmount;
 
     @JoinColumn
     @ManyToOne

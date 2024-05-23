@@ -2,11 +2,13 @@ package com.acciojob.librarymanagementsystemapril.Controllers;
 
 import com.acciojob.librarymanagementsystemapril.Services.AuthorService;
 import com.acciojob.librarymanagementsystemapril.models.Author;
+import com.acciojob.librarymanagementsystemapril.models.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,4 +35,16 @@ public class AuthorController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("find-all-authors")
+    public List<String> getAllAuthors(){
+        return authorService.findAllAuthors();
+    }
+
+    @GetMapping("author-written-maxNoOfBooks")
+    public String getAuthorWrittenMaxNoOfBooks(){
+        return authorService.findAuthorWhoWrittenMaxNoOfBooks();
+    }
+
+
 }

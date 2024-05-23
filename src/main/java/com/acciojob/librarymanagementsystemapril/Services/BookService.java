@@ -1,6 +1,7 @@
 package com.acciojob.librarymanagementsystemapril.Services;
 
 
+import com.acciojob.librarymanagementsystemapril.Enum.Genre;
 import com.acciojob.librarymanagementsystemapril.Repositories.AuthorRepository;
 import com.acciojob.librarymanagementsystemapril.Repositories.BookRepository;
 import com.acciojob.librarymanagementsystemapril.models.Author;
@@ -8,6 +9,8 @@ import com.acciojob.librarymanagementsystemapril.models.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,5 +52,44 @@ public class BookService {
 
     }
 
+
+
+    public List<String> findAllBooksOfAuthor(String authorName){
+        List<Book> bookList = bookRepository.findAll();
+        List<String> ansBookList = new ArrayList<>();
+        for(Book book : bookList){
+
+            if(book.getAuthor().getAuthorName().equals(authorName)){
+                ansBookList.add(book.getBookName());
+            }
+        }
+
+        return ansBookList;
+    }
+
+    public Book recommendBook(Genre genre) {
+        //get books list
+        List<Book> bookList = bookRepository.findAll();
+
+        //get books of input genre
+        List<Book> ansBookList = new ArrayList<>();
+
+        for(Book book : bookList) {
+            if(book.getGenre().equals(genre)){
+                ansBookList.add(book);
+            }
+        }
+
+        //get book of highest rating
+        double maxRating = 0.0;
+        Book answerBook = null;
+        for(Book book : ansBookList){
+            if(book.getRating() > maxRating){
+                maxRating = book.getRating();
+                answerBook = book;
+            }
+        }
+        return answerBook;
+    }
 
 }

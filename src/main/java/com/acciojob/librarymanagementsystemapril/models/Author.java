@@ -5,10 +5,13 @@ import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "author_info")
-@Getter
-@Setter
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -21,4 +24,7 @@ public class Author {
     private int age;
     private int noOfBooks;
     private double rating;
+
+
+
 }
