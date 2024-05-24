@@ -7,6 +7,8 @@ import com.acciojob.librarymanagementsystemapril.models.LibraryCard;
 import com.acciojob.librarymanagementsystemapril.models.Student;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,6 +21,9 @@ public class CardService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     public String addCard(){
         LibraryCard card = new LibraryCard();
@@ -36,6 +41,18 @@ public class CardService {
 
         card.setStudent(student);
         card.setCardStatus(CardStatus.ACTIVE);
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(student.getEmailId());
+        mailMessage.setFrom("kmadhav455@gmail.com");
+        mailMessage.setSubject("Welcome to library Services");
+
+        String body = "hello "+student.getName() + "\n" +
+                "your library card is activated"+ "\n" +
+                "make good use of library services";
+        mailMessage.setText(body);
+
+        javaMailSender.send(mailMessage);
 
         cardRepository.save(card);
 

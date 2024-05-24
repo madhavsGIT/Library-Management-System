@@ -9,6 +9,8 @@ import com.acciojob.librarymanagementsystemapril.Requests.UpdateStudentRequest;
 import com.acciojob.librarymanagementsystemapril.models.LibraryCard;
 import com.acciojob.librarymanagementsystemapril.models.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,8 +26,9 @@ public class StudentService {
     @Autowired
     private CardRepository cardRepository;
 
-    public String addStudent(Student Student){
-        studentRepository.save(Student);
+
+    public String addStudent(Student student){
+        studentRepository.save(student);
         return "The student has been added to the Db";
     }
 
